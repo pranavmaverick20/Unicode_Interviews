@@ -1,4 +1,4 @@
-async function start(){
+start= async ()=>{
     let characters =await (await fetch("https://hp-api.onrender.com/api/characters")).json();
     let spells =await (await fetch("https://hp-api.onrender.com/api/spells")).json();
     let staff =await (await fetch("https://hp-api.onrender.com/api/characters/staff")).json();
