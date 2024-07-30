@@ -7,23 +7,43 @@ app.get('/', (req, res) => {
 
 //Now to fetch JSON data from all APIs
 app.get('/api/characters', async (req, res) => {
-    let characters = await (await fetch('https://hp-api.onrender.com/api/characters')).json();
-    res.status(200).send(characters);
+    try {
+        let characters = await (await fetch('https://hp-api.onrender.com/api/characters')).json();
+        res.status(200).send(characters);
+    }
+    catch (err) {
+        res.status(404).send("<h1>Failed to retreive");
+    }
 });
 
 app.get('/api/spells', async (req, res) => {
-    let spells = await (await fetch('https://hp-api.onrender.com/api/spells')).json();
-    res.status(200).send(spells);
+    try {
+        let spells = await (await fetch('https://hp-api.onrender.com/api/spells')).json();
+        res.status(200).send(spells);
+    }
+    catch (err) {
+        res.status(404).send("<h1>Failed to retreive");
+    }
 });
 
 app.get('/api/staff', async (req, res) => {
-    let staff = await (await fetch('https://hp-api.onrender.com/api/characters/staff')).json();
-    res.status(200).send(staff);
+    try {
+        let staff = await (await fetch('https://hp-api.onrender.com/api/characters/staff')).json();
+        res.status(200).send(staff);
+    }
+    catch (err) {
+        res.status(404).send("<h1>Failed to retreive");
+    }
 });
 
 app.get('/api/students', async (req, res) => {
-    let characters = await (await fetch('https://hp-api.onrender.com/api/characters/students')).json();
-    res.status(200).send(characters);
+    try {
+        let characters = await (await fetch('https://hp-api.onrender.com/api/characters/students')).json();
+        res.status(200).send(characters);
+    }
+    catch (err) {
+        res.status(404).send("<h1>Failed to retreive");
+    }
 });
 
 /*
@@ -31,14 +51,19 @@ The following method takes in the character id as a request parameter and return
 the character as a json response
 */
 app.get('/api/character/:characterID', async (req, res) => {
-    let { characterID } = req.params;
-    console.log(req.params);
-    console.log(characterID)
-    let characters = await (await fetch('https://hp-api.onrender.com/api/characters')).json();
-    const cid = characters.find((c) => {
-        return c["id"] == characterID;
-    });
-    res.send(cid);
+    try {
+        let { characterID } = req.params;
+        console.log(req.params);
+        console.log(characterID)
+        let characters = await (await fetch('https://hp-api.onrender.com/api/characters')).json();
+        const cid = characters.find((c) => {
+            return c["id"] == characterID;
+        });
+        res.send(cid);
+    }
+    catch (err) {
+        res.status(404).send("<h1>Failed to retreive");
+    }
 });
 
 
