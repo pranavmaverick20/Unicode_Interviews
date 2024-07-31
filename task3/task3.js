@@ -7,14 +7,14 @@ app.use(express.json());
 
 const Student = require('./model.js');
 
-app.post('/api/students', async (req, res) => {
+app.post('/api/students',async (req, res) => {
     try {
         let data = req.body;
-        if (data.house.toLowerCase() == "random") {
+        if (data.house.toLowerCase()=="random") {
             data.house = houseGenerator();
         }
         console.log(data)
-        const student = await Student.create(data);
+        const student=await Student.create(data);
         res.status(200).json(student);
     }
     catch (err) {
@@ -39,10 +39,10 @@ function houseGenerator() {
     }
 }
 
-start = async () => {
+start=async () => {
     try {
         await mongoose.connect("mongodb+srv://pranavahuja20:Unicode_Task3@harrypotterstudents.12oqvj7.mongodb.net/Unicode_Task3?retryWrites=true&w=majority&appName=HarryPotterStudents");
-        console.log("Connected to DB");
+        console.log("Connected to DB!");
     }
     catch (error) {
         console.log("Failed to connect");
