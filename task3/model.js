@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Student = mongoose.Schema({
+const StudentSchema = mongoose.Schema({
     id: {
         type: String,
         required: [true, "Please enter ID"]
@@ -13,14 +13,16 @@ const Student = mongoose.Schema({
         required: [true, "Please enter gender"]
     },
     house: {
-        type: Boolean,
+        type: String,
         required: [true, "Please enter wizard or not"]
     },
 
     wizard: {
-        type: String,
+        type: Boolean,
         required: [true, "Please Enter ID"]
     }
 
 });
+
+const Student = mongoose.model("Student", StudentSchema)
 module.exports = Student;
