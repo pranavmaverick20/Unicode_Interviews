@@ -1,4 +1,5 @@
 const express = require('express');
+const axios=require('axios');
 const app = express();
 //linking basic html file to show menu
 app.get('/', (req, res) => {
@@ -8,11 +9,11 @@ app.get('/', (req, res) => {
 //Now to fetch JSON data from all APIs
 app.get('/api/characters', async (req, res) => {
     try {
-        let characters = await (await fetch('https://hp-api.onrender.com/api/characters')).json();
-        res.status(200).send(characters);
+        let characters =await axios.get('https://hp-api.onrender.com/api/characters');
+        res.status(200).send(characters.data);
     }
     catch (err) {
-        res.status(404).send("<h1>Failed to retreive");
+        res.status(404).send("<h1>Failed to retreive</h1>");
     }
 });
 
@@ -22,7 +23,7 @@ app.get('/api/spells', async (req, res) => {
         res.status(200).send(spells);
     }
     catch (err) {
-        res.status(404).send("<h1>Failed to retreive");
+        res.status(404).send("<h1>Failed to retreive</h1>");
     }
 });
 
@@ -32,7 +33,7 @@ app.get('/api/staff', async (req, res) => {
         res.status(200).send(staff);
     }
     catch (err) {
-        res.status(404).send("<h1>Failed to retreive");
+        res.status(404).send("<h1>Failed to retreive</h1>");
     }
 });
 
@@ -42,7 +43,7 @@ app.get('/api/students', async (req, res) => {
         res.status(200).send(characters);
     }
     catch (err) {
-        res.status(404).send("<h1>Failed to retreive");
+        res.status(404).send("<h1>Failed to retreive</h1>");
     }
 });
 
@@ -62,7 +63,7 @@ app.get('/api/character/:characterID', async (req, res) => {
         res.send(cid);
     }
     catch (err) {
-        res.status(404).send("<h1>Failed to retreive");
+        res.status(404).send("<h1>Failed to retreive</h1>");
     }
 });
 
