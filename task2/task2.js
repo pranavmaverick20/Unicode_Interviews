@@ -1,5 +1,5 @@
 const express = require('express');
-const axios=require('axios');
+const axios = require('axios');
 const app = express();
 //linking basic html file to show menu
 app.get('/', (req, res) => {
@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 //Now to fetch JSON data from all APIs
 app.get('/api/characters', async (req, res) => {
     try {
-        let characters =await axios.get('https://hp-api.onrender.com/api/characters');
+        let characters = await axios.get('https://hp-api.onrender.com/api/characters');
         res.status(200).send(characters.data);
     }
     catch (err) {
