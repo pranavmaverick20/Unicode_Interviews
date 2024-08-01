@@ -10,15 +10,16 @@ const Student = require('./model.js');
 app.post('/api/students', async (req, res) => {
     try {
         let data = req.body;
-        if (data.house.toLowerCase() == "random") {
-            data.house = houseGenerator();
-        }
+        // if (data.house.toLowerCase() == "random") {
+        //     data.house = houseGenerator();
+        // }
         console.log(data)
         const student = await Student.create(data);
         res.status(200).json(student);
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to send" })
+        res.status(404).json({ success: false, msg: "Failed to send" });
+        console.log(err);
     }
 });
 //added reading the DB using .find() method
@@ -51,21 +52,39 @@ app.delete('/api/students/expell/muggles', async (req, res) => {
 
 //this is bonus of task 4
 
-app.put('/api/students/changehouse/:sid', async (req, res) => {
+app.put('/api/students/changehouse/:sid/:house', async (req, res) => {
     try {
-        const { sid } = req.params;
+        const { sid, house } = req.params;
         const studentId = (await Student.findOne({ id: sid }))._id;
         if (!studentId) {
             return res.status(404).send("No student found");
         }
-        await Student.findByIdAndUpdate(studentId, req.body);
+        await Student.findByIdAndUpdate(studentId, { house: house });
         res.status(200).json(await Student.findOne({ id: sid }));
     }
     catch (err) {
         res.status(404).json({ success: false, msg: "Failed to retrieve students" });
     }
+});
 
 
+//this is bonus task
+
+app.get('/api/students/:str', async (req, res) => {
+    try {
+        const { str } = req.params;
+        let students = await Student.find();
+        console.log(students);
+        students = students.filter((s) => s.name.toLowerCase().startsWith(str.toLowerCase()));
+        res.status(200).json(students);
+
+        if (students.length === 0) {
+            return res.status(404).json({ message: 'No students found' });
+        }
+    }
+    catch (err) {
+        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+    }
 
 });
 
