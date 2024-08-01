@@ -48,7 +48,7 @@ function houseGenerator() {
     }
 }
 
-start = async () => {
+(async () => {
     try {
         await mongoose.connect("mongodb+srv://Unicode_Task3:Unicode_Task3@harrypotterstudents.12oqvj7.mongodb.net/Unicode_Task3?retryWrites=true&w=majority&appName=HarryPotterStudents");
         console.log("Connected to DB!");
@@ -60,8 +60,7 @@ start = async () => {
         console.log("Server listening on port 5000");
 
     })
-}
-start();
+})();
 
 
 
