@@ -31,6 +31,7 @@ app.get('/api/students', async (req, res) => {
     }
 });
 
+//This is task 4
 
 app.delete('/api/students/expell/muggles', async (req, res) => {
     try {
@@ -45,7 +46,27 @@ app.delete('/api/students/expell/muggles', async (req, res) => {
     catch (err) {
         res.status(404).json({ success: false, msg: "Failed to retrieve students" });
     }
-    
+
+});
+
+//this is bonus of task 4
+
+app.put('/api/students/changehouse/:sid', async (req, res) => {
+    try {
+        const { sid } = req.params;
+        const studentId = (await Student.findOne({ id: sid }))._id;
+        if (!studentId) {
+            return res.status(404).send("No student found");
+        }
+        await Student.findByIdAndUpdate(studentId, req.body);
+        res.status(200).json(await Student.findOne({ id: sid }));
+    }
+    catch (err) {
+        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+    }
+
+
+
 });
 
 
