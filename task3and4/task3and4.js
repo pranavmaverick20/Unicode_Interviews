@@ -7,12 +7,25 @@ app.use(express.json());
 
 const Student = require('./model.js');
 
-app.post('/api/students', async (req, res) => {
+app.post('/api/students/one', async (req, res) => {
     try {
         let data = req.body;
-        // if (data.house.toLowerCase() == "random") {
-        //     data.house = houseGenerator();
-        // }
+        if (data.house.toLowerCase() == "random") {
+            data.house = houseGenerator();
+        }
+        console.log(data)
+        const student = await Student.create(data);
+        res.status(200).json(student);
+    }
+    catch (err) {
+        res.status(404).json({ success: false, msg: "Failed to send" });
+        console.log(err);
+    }
+});
+
+app.post('/api/students/many', async (req, res) => {
+    try {
+        let data = req.body;
         console.log(data)
         const student = await Student.create(data);
         res.status(200).json(student);
@@ -86,6 +99,18 @@ app.get('/api/students/:str', async (req, res) => {
         res.status(404).json({ success: false, msg: "Failed to retrieve students" });
     }
 
+});
+
+//extra code to delete all
+
+app.delete('/api/students/deleteAll', async (req, res) => {
+    try {
+        await Student.deleteMany();
+        res.status(200).send("Deleted All");
+    }
+    catch (err) {
+        res.status(500).json({ success: false, msg: "Error occurred" });
+    }
 });
 
 
