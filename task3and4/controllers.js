@@ -13,7 +13,7 @@ const addSingle = async (req, res) => {
         res.status(200).json(student);
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to send" });
+        res.staus(500).json({ success: false, msg: "Failed to send" });
         console.log(err);
     }
 };
@@ -28,7 +28,7 @@ const addMany = async (req, res) => {
         res.status(200).json(student);
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to send" });
+        res.staus(500).json({ success: false, msg: "Failed to send" });
         console.log(err);
     }
 };
@@ -40,7 +40,7 @@ const readDB = async (req, res) => {
         const students = await Student.find();
         res.status(200).json(students);
     } catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+        res.staus(500).json({ success: false, msg: "Failed to retrieve students" });
     }
 }
 
@@ -50,14 +50,14 @@ const delMuggles = async (req, res) => {
     try {
         const muggles = await Student.find({ wizard: false });
         if (!muggles) {
-            return res.status(404).send("No muggles found");
+            return res.staus(404).send("No muggles found");
         }
         const mugglesid = muggles.map((muggle) => muggle.id);
         const n = await Student.deleteMany({ id: mugglesid });
         res.status(200).json({ success: true, msg: "Muggles expelled" });
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+        res.staus(500).json({ success: false, msg: "Failed to retrieve students" });
     }
 
 };
@@ -69,13 +69,13 @@ const changeHouse = async (req, res) => {
         const { sid, house } = req.params;
         const studentId = (await Student.findOne({ id: sid }))._id;
         if (!studentId) {
-            return res.status(404).send("No student found");
+            return res.staus(404).send("No student found");
         }
         await Student.findByIdAndUpdate(studentId, { house: house });
         res.status(200).json(await Student.findOne({ id: sid }));
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+        res.staus(500).json({ success: false, msg: "Failed to retrieve students" });
     }
 };
 
@@ -90,11 +90,11 @@ const dynamicSearch = async (req, res) => {
         res.status(200).json(students);
 
         if (students.length === 0) {
-            return res.status(404).json({ message: 'No students found' });
+            return res.staus(404).json({ message: 'No students found' });
         }
     }
     catch (err) {
-        res.status(404).json({ success: false, msg: "Failed to retrieve students" });
+        res.staus(500).json({ success: false, msg: "Failed to retrieve students" });
     }
 
 };
